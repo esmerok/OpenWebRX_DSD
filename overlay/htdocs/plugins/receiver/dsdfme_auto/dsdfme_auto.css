@@ -1,0 +1,157 @@
+#openwebrx-panel-metadata-dsdfme {
+    max-width: 619px;
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-meta-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding: 6px 8px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+    background: rgba(70, 70, 70, 0.22);
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-header-right {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-current-mode {
+    padding: 2px 6px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 4px;
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-dmr-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border: 1px solid rgba(200, 200, 200, 0.42);
+    border-radius: 4px;
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    color: rgba(245, 245, 245, 0.9);
+    background: rgba(120, 120, 120, 0.24);
+    white-space: nowrap;
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-dmr-badge.is-simplex {
+    border-color: rgba(180, 180, 180, 0.5);
+    background: rgba(105, 105, 105, 0.25);
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-dmr-badge.is-repeater {
+    border-color: rgba(170, 170, 170, 0.45);
+    background: rgba(95, 95, 95, 0.22);
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-header-crypto {
+    color: #ffb5b5;
+    font-size: 0.78rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 260px;
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-meta-header.encrypted {
+    border-color: rgba(255, 86, 86, 0.8);
+    background: rgba(128, 25, 25, 0.35);
+    color: #ffe0e0;
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-dmr-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+#openwebrx-panel-metadata-dsdfme.dsdfme-mode-single .dsdfme-dmr-grid {
+    display: none;
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-single {
+    display: none;
+}
+
+#openwebrx-panel-metadata-dsdfme.dsdfme-mode-single .dsdfme-single {
+    display: block;
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-slot,
+#openwebrx-panel-metadata-dsdfme .dsdfme-single {
+    min-height: 96px;
+    padding: 8px;
+    border: 1px solid rgba(180, 180, 180, 0.4);
+    border-radius: 4px;
+    background: rgba(96, 96, 96, 0.2);
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-slot-title,
+#openwebrx-panel-metadata-dsdfme .dsdfme-single-mode {
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-row {
+    display: grid;
+    grid-template-columns: 68px 1fr;
+    gap: 6px;
+    line-height: 1.35;
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-key {
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.76rem;
+    letter-spacing: 0.03em;
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-crypto-row {
+    min-height: 18px;
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-crypto,
+#openwebrx-panel-metadata-dsdfme .dsdfme-single-crypto {
+    color: #ffb5b5;
+    font-size: 0.8rem;
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-slot.active {
+    border-color: rgba(98, 216, 126, 0.92);
+    box-shadow: 0 0 0 1px rgba(98, 216, 126, 0.28) inset;
+    background: rgba(48, 86, 48, 0.18);
+}
+
+#openwebrx-panel-metadata-dsdfme .dsdfme-slot.encrypted,
+#openwebrx-panel-metadata-dsdfme .dsdfme-single.encrypted {
+    border-color: rgba(255, 86, 86, 0.82);
+    box-shadow: 0 0 0 1px rgba(255, 86, 86, 0.24) inset;
+}
+
+@media (max-width: 720px) {
+    #openwebrx-panel-metadata-dsdfme .dsdfme-dmr-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #openwebrx-panel-metadata-dsdfme .dsdfme-header-right {
+        max-width: 70%;
+    }
+
+    #openwebrx-panel-metadata-dsdfme .dsdfme-header-crypto {
+        max-width: 140px;
+    }
+}

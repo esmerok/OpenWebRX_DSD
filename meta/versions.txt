@@ -1,0 +1,17 @@
+Mon Feb 23 17:15:18 CET 2026
+Linux tetrasdr 6.12.62+rpt-rpi-2712 #1 SMP PREEMPT Debian 1:6.12.62-1+rpt1 (2025-12-18) aarch64 GNU/Linux
+Distributor ID:	Debian
+Description:	Debian GNU/Linux 13 (trixie)
+Release:	13
+Codename:	trixie
+ii  libowrx-connector                                0.6.5                                     arm64        OpenWebRX connector base library
+ii  openwebrx                                        1.2.107                                   all          multi-user web sdr
+ii  owrx-connector                                   0.6.5                                     arm64        Virtual bundle dependency package
+ii  rtl-connector                                    0.6.5                                     arm64        OpenWebRX connector for RTL-SDR devices
+ii  rtl-tcp-connector                                0.6.5                                     arm64        OpenWebRX connector for rtl_tcp remote devices
+ii  soapy-connector                                  0.6.5                                     arm64        OpenWebRX connector for SoapySDR devices
+
+Usage: dsd-fme [options]            Decoder/Trunking Mode
+  or:  dsd-fme [options] -r <files> Read/Play saved mbe data from file(s)
+  or:  dsd-fme -h                   Show help
+
