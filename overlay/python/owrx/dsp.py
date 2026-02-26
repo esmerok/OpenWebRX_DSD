@@ -619,9 +619,6 @@ class DspManager(SdrSourceEventClient, ClientDemodulatorSecondaryDspEventClient)
         elif demod == "m17":
             from csdr.chain.m17 import M17
             return M17()
-        elif demod in ["dsdfme", "dsd-fme-auto"]:
-            from csdr.chain.dsdfme import DsdFmeAuto
-            return DsdFmeAuto()
         elif demod == "drm":
             from csdr.chain.drm import Drm
             return Drm()

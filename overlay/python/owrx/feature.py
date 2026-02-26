@@ -81,7 +81,6 @@ class FeatureDetector(object):
         "digital_voice_digiham": ["digiham", "codecserver_ambe"],
         "digital_voice_freedv": ["freedv_rx"],
         "digital_voice_m17": ["m17_demod"],
-        "digital_voice_dsd_fme": ["dsd_fme"],
         "wsjt-x": ["wsjtx"],
         "wsjt-x-2-3": ["wsjtx_2_3"],
         "wsjt-x-2-4": ["wsjtx_2_4"],
@@ -475,14 +474,6 @@ class FeatureDetector(object):
         `m17-demod` package from the OpenWebRX repositories.
         """
         return self.command_is_runnable("m17-demod", 0)
-
-    def has_dsd_fme(self):
-        """
-        OpenWebRX can use the [DSD-FME](https://github.com/lwvmobile/dsd-fme)
-        decoder for digital voice demodulation. Make sure the `dsd-fme`
-        executable is installed and available in `$PATH`.
-        """
-        return self.command_is_runnable("dsd-fme -h")
 
     def has_direwolf(self):
         """
