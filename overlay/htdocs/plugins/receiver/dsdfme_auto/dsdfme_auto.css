@@ -130,7 +130,8 @@
     font-size: 0.8rem;
 }
 
-[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-slot.active {
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-slot.active,
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-single.active {
     border-color: rgba(98, 216, 126, 0.92);
     box-shadow: 0 0 0 1px rgba(98, 216, 126, 0.28) inset;
     background: rgba(48, 86, 48, 0.18);
@@ -154,4 +155,90 @@
     [id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-header-crypto {
         max-width: 140px;
     }
+}
+
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-user-image {
+    width: 100%;
+    height: 72px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-slot.active .dsdfme-user-image {
+    background-image: url("/static/gfx/openwebrx-directcall.png");
+}
+
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-slot.active.group .dsdfme-user-image {
+    background-image: url("/static/gfx/openwebrx-groupcall.png");
+}
+
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-slot.active,
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-single.active {
+    background: #95bbdf;
+    border-color: rgba(0, 0, 0, 0.25);
+    box-shadow: none;
+}
+
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-slot.active .dsdfme-slot-title,
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-slot.active .dsdfme-key,
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-slot.active .dsdfme-slot-tg,
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-slot.active .dsdfme-slot-id,
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-slot.active .dsdfme-slot-name,
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-slot.active .dsdfme-slot-cc,
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-slot.active .dsdfme-slot-type,
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-slot.active .dsdfme-slot-simplex,
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-single.active .dsdfme-key,
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-single.active .dsdfme-single-tg,
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-single.active .dsdfme-single-uid,
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-single.active .dsdfme-single-name {
+    color: #222;
+}
+
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-slot.active .dsdfme-slot-crypto {
+    color: #5b1a1a;
+}
+
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-slot.sync .dsdfme-slot-title {
+    position: relative;
+    padding-left: 14px;
+}
+
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-slot.sync .dsdfme-slot-title:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ABFF00;
+    box-shadow: 0 0 6px rgba(171, 255, 0, 0.95), 0 0 2px rgba(171, 255, 0, 1);
+    transform: translateY(-50%);
+}
+
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-user-image {
+  width: 100%;
+  height: 72px;
+  margin: 4px 0 6px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.75;
+}
+
+/* DIRECT CALL (active) */
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-slot.active .dsdfme-user-image,
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-single.active .dsdfme-user-image {
+  background-image:
+    url("/static/gfx/openwebrx-directcall.png"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='20' r='12' fill='%23000' fill-opacity='0.25'/%3E%3Cpath d='M16 58c0-10 7-18 16-18s16 8 16 18' fill='%23000' fill-opacity='0.25'/%3E%3C/svg%3E");
+}
+
+/* GROUP CALL (active + group) */
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-slot.active.group .dsdfme-user-image,
+[id^="openwebrx-panel-metadata-dsdfme"] .dsdfme-single.active.group .dsdfme-user-image {
+  background-image:
+    url("/static/gfx/openwebrx-groupcall.png"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 64'%3E%3Ccircle cx='36' cy='20' r='11' fill='%23000' fill-opacity='0.25'/%3E%3Ccircle cx='60' cy='22' r='11' fill='%23000' fill-opacity='0.25'/%3E%3Cpath d='M18 58c0-10 8-18 18-18s18 8 18 18' fill='%23000' fill-opacity='0.25'/%3E%3Cpath d='M42 58c0-10 8-18 18-18s18 8 18 18' fill='%23000' fill-opacity='0.25'/%3E%3C/svg%3E");
 }

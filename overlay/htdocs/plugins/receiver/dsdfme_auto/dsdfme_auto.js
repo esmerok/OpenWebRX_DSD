@@ -30,7 +30,26 @@
   }
 
   function injectPanel() {
+    function ensureUserImages($panel) {
+      $panel.find('.dsdfme-slot').each(function () {
+        var $slot = $(this);
+        var $title = $slot.children('.dsdfme-slot-title').first();
+        if ($title.length && !$title.next('.dsdfme-user-image').length) {
+          $('<div class="dsdfme-user-image" aria-hidden="true"></div>').insertAfter($title);
+        }
+      });
+
+      $panel.find('.dsdfme-single').each(function () {
+        var $single = $(this);
+        var $title = $single.children('.dsdfme-single-mode').first();
+        if ($title.length && !$title.next('.dsdfme-user-image').length) {
+          $('<div class="dsdfme-user-image" aria-hidden="true"></div>').insertAfter($title);
+        }
+      });
+    }
+
     if (document.getElementById('openwebrx-panel-metadata-dsdfme')) {
+      ensureUserImages($('#openwebrx-panel-metadata-dsdfme'));
       return;
     }
 
@@ -83,16 +102,19 @@
 
     if ($anchor.length) {
       $anchor.after($panel);
+      ensureUserImages($panel);
       return;
     }
 
     var $metaPanels = $('.openwebrx-meta-panel');
     if ($metaPanels.length) {
       $metaPanels.last().after($panel);
+      ensureUserImages($panel);
       return;
     }
 
     $('#openwebrx-panels-container-left').append($panel);
+    ensureUserImages($panel);
   }
 
   function isDsdfmeModulation(m) {
@@ -517,9 +539,11 @@
       var st = this.model.slots[slot];
       var ui = this.$slots[slot];
       var active = st.activeUntil > now;
+      var isGroup = active && /group/i.test(st.callType || '');
 
       this._setClass(ui.root, 'active', active);
       this._setClass(ui.root, 'sync', active);
+      ui.root.toggleClass('group', isGroup);
       this._setClass(ui.root, 'encrypted', active && !!st.encrypted);
 
       this._setText(ui.tg, active ? this._valueOrDash(st.tg) : '—');
@@ -543,8 +567,18 @@
     var st = this.model.single;
     var mode = this._normalizeMode(st.mode || this.model.mode);
     var active = st.activeUntil > now;
+    var singleRoot = this.$single;
+    var activeSingle = active;
+    if (!activeSingle) {
+      var hasTargetOrSource = !!(st.tg || st.uid);
+      var idleHint = ((st.tg || '') + ' ' + (st.uid || '')).toString();
+      var isIdle = /\bidle\b/i.test(idleHint);
+      activeSingle = !!(mode && hasTargetOrSource && !isIdle);
+    }
+    var isGroupSingle = activeSingle && /group/i.test((this.model.callType || this.model.singleCallType || ''));
 
-    this._setClass(this.$single, 'active', active);
+    singleRoot.toggleClass('active', !!activeSingle);
+    singleRoot.toggleClass('group', !!isGroupSingle);
     this._setClass(this.$single, 'sync', active);
     this._setClass(this.$single, 'encrypted', !!st.encrypted);
 
