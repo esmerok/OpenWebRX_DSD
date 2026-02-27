@@ -88,7 +88,8 @@
     }
 
     showWatermark();
-    addCss("static/plugins/receiver/dsdfme_auto/dsdfme_auto.css");
-    addScript("static/plugins/receiver/dsdfme_auto/dsdfme_auto.js", bootDsdfme);
+    var dsdfmeV = String(Date.now());
+    addCss("static/plugins/receiver/dsdfme_auto/dsdfme_auto.css?v=" + dsdfmeV);
+    addScript("static/plugins/receiver/dsdfme_auto/dsdfme_auto.js?v=" + dsdfmeV, bootDsdfme);
     setTimeout(bootDsdfme, 0);
 })();

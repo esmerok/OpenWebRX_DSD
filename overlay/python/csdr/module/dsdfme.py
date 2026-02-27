@@ -155,9 +155,14 @@ class RadioIdApiResolver:
 
 class DsdFmeModule(AutoStartModule):
     TCP_HOST = "127.0.0.1"
-    TCP_PORT = 7355
     RESTART_DELAY_SEC = 2.0
-    PROFILE_ARGS = ["-fa", "-Z"]
+    PROFILES = {
+        "dsdfme": ["-ft", "-Z"],
+        "dsdfme-nxdn48": ["-fi", "-Z"],
+        "dsdfme-nxdn96": ["-fn", "-Z"],
+        "dsdfme-dpmr": ["-fm", "-Z"],
+    }
+    PROFILE_ARGS = PROFILES["dsdfme"]  # fallback
     META_PROTOCOL = "DSDFME"
     DEBUG_ENABLED = os.environ.get("DSDFME_DEBUG", "") == "1"
     DIAG_THROTTLE_SEC = 0.2
@@ -213,7 +218,10 @@ class DsdFmeModule(AutoStartModule):
     ANSI_ESCAPE_REGEX = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
     CONTROL_CHAR_REGEX = re.compile(r"[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]")
 
-    def __init__(self):
+    def __init__(self, profile_key: str = "dsdfme"):
+        self._profile_key = profile_key
+        self._tcp_port = None
+        self._udp_port = None
         super().__init__()
         self.doRun = False
         self.process = None
@@ -250,14 +258,14 @@ class DsdFmeModule(AutoStartModule):
     def setMetaWriter(self, writer: Writer) -> None:
         self.metawriter = writer
 
-    def _buildCommand(self, audioPort: int):
+    def _buildCommand(self):
         return [
             "dsd-fme",
             "-i",
-            "tcp",
+            f"tcp:{DsdFmeModule.TCP_HOST}:{self._tcp_port}",
             "-o",
-            "udp:127.0.0.1:{}".format(audioPort),
-        ] + DsdFmeModule.PROFILE_ARGS
+            "udp:127.0.0.1:{}".format(self._udp_port),
+        ] + DsdFmeModule.PROFILES.get(self._profile_key, DsdFmeModule.PROFILE_ARGS)
 
     def _newState(self, slot: str = None, mode: str = None):
         return {
@@ -319,7 +327,8 @@ class DsdFmeModule(AutoStartModule):
         try:
             tcpServerSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             tcpServerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            tcpServerSocket.bind((DsdFmeModule.TCP_HOST, DsdFmeModule.TCP_PORT))
+            tcpServerSocket.bind((DsdFmeModule.TCP_HOST, 0))
+            self._tcp_port = tcpServerSocket.getsockname()[1]
             tcpServerSocket.listen(1)
             tcpServerSocket.settimeout(0.5)
         except Exception:
@@ -330,13 +339,13 @@ class DsdFmeModule(AutoStartModule):
             audioSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             audioSocket.bind(("127.0.0.1", 0))
             audioSocket.settimeout(0.5)
-            audioPort = audioSocket.getsockname()[1]
+            self._udp_port = audioSocket.getsockname()[1]
         except Exception:
             logger.exception("Unable to create UDP listener for dsd-fme audio")
             tcpServerSocket.close()
             return False
 
-        cmd = self._buildCommand(audioPort)
+        cmd = self._buildCommand()
         try:
             process = Popen(cmd, stdin=DEVNULL, stdout=DEVNULL, stderr=PIPE)
         except FileNotFoundError:
@@ -363,7 +372,7 @@ class DsdFmeModule(AutoStartModule):
         Thread(target=self._audioLoop, args=[process, audioSocket], daemon=True).start()
         Thread(target=self._stderrLoop, args=[process], daemon=True).start()
 
-        logger.info("Started dsd-fme profile=auto tcp_port=%s udp_port=%s", DsdFmeModule.TCP_PORT, audioPort)
+        logger.info("Started dsd-fme profile=%s tcp_port=%s udp_port=%s", self._profile_key, self._tcp_port, self._udp_port)
         return True
 
     def _stopProcess(self):

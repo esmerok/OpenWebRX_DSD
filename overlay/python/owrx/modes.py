@@ -156,7 +156,28 @@ class Modes(object):
         AnalogMode("m17", "M17", bandpass=Bandpass(-6250, 6250), requirements=["digital_voice_m17"], squelch=False),
         AnalogMode(
             "dsdfme",
-            "DSD-FME Auto",
+            "FME-XDMA",
+            bandpass=Bandpass(-6250, 6250),
+            requirements=["digital_voice_dsd_fme"],
+            squelch=False
+        ),
+        AnalogMode(
+            "dsdfme-nxdn48",
+            "FME-N48",
+            bandpass=Bandpass(-6250, 6250),
+            requirements=["digital_voice_dsd_fme"],
+            squelch=False
+        ),
+        AnalogMode(
+            "dsdfme-nxdn96",
+            "FME-N96",
+            bandpass=Bandpass(-6250, 6250),
+            requirements=["digital_voice_dsd_fme"],
+            squelch=False
+        ),
+        AnalogMode(
+            "dsdfme-dpmr",
+            "FME-dPMR",
             bandpass=Bandpass(-6250, 6250),
             requirements=["digital_voice_dsd_fme"],
             squelch=False

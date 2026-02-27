@@ -6,8 +6,8 @@ from pycsdr.types import Format
 
 
 class DsdFmeAuto(BaseDemodulatorChain, FixedIfSampleRateChain, FixedAudioRateChain, MetaProvider):
-    def __init__(self):
-        self.module = DsdFmeModule()
+    def __init__(self, profile_key: str = "dsdfme"):
+        self.module = DsdFmeModule(profile_key=profile_key)
         self.metaParser = None
         workers = [
             FmDemod(),

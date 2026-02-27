@@ -95,6 +95,12 @@
     $('#openwebrx-panels-container-left').append($panel);
   }
 
+  function isDsdfmeModulation(m) {
+    if (!m) return false;
+    m = String(m);
+    return m === 'dsdfme' || m === 'dsd-fme-auto' || m.indexOf('dsdfme-') === 0;
+  }
+
   function patchModeAlias() {
     if (typeof Modes === 'undefined' || typeof Modes.findByModulation !== 'function') {
       return;
@@ -139,17 +145,18 @@
       }
 
       var modulation = demod.get_modulation();
-      if (modulation === 'dsd-fme-auto') {
-        modulation = 'dsdfme';
-      }
-
-      if (modulation !== 'dsdfme') {
+      if (!isDsdfmeModulation(modulation)) {
         return;
       }
 
       var panel = document.getElementById('openwebrx-panel-metadata-dsdfme');
       if (panel && !panel.classList.contains('disabled')) {
         toggle_panel('openwebrx-panel-metadata-dsdfme', true);
+        var panel$ = $('#openwebrx-panel-metadata-dsdfme');
+        var metap = panel$.data('metapanel');
+        if (metap && typeof metap.hintProfile === 'function') {
+          metap.hintProfile(modulation);
+        }
       }
     };
 
@@ -357,7 +364,7 @@
   DsdfmeMetaPanel.prototype._setHeader = function (mode, encrypted, cryptoText) {
     this._setText(this.$currentMode, mode || 'DMR');
     this._setClass(this.$header, 'encrypted', encrypted);
-    this._setText(this.$headerCrypto, encrypted ? '[LOCK] ' + (cryptoText || 'ENCRYPTED') : '');
+    this._setText(this.$headerCrypto, encrypted ? '\uD83D\uDD12 ' + (cryptoText || 'ENCRYPTED') : '');
   };
 
   DsdfmeMetaPanel.prototype._setLayout = function (mode) {
@@ -598,6 +605,17 @@
     this._render();
   };
 
+  DsdfmeMetaPanel.prototype.hintProfile = function (modulation) {
+    modulation = String(modulation || '');
+    if (modulation === 'dsdfme-nxdn48' || modulation === 'dsdfme-nxdn96') {
+      this.model.mode = 'NXDN';
+      this._render();
+    } else if (modulation === 'dsdfme-dpmr') {
+      this.model.mode = 'DPMR';
+      this._render();
+    }
+  };
+
   plugin.init = function () {
     if (window.__dsdfmeAutoInitialized) {
       return true;
@@ -626,6 +644,10 @@
     }
 
     MetaPanel.types.dsdfme = DsdfmeMetaPanel;
+    MetaPanel.types["dsdfme-nxdn48"] = DsdfmeMetaPanel;
+    MetaPanel.types["dsdfme-nxdn96"] = DsdfmeMetaPanel;
+    MetaPanel.types["dsdfme-dpmr"]   = DsdfmeMetaPanel;
+    MetaPanel.types["dsd-fme-auto"]  = DsdfmeMetaPanel;
     $('#openwebrx-panel-metadata-dsdfme').removeData('metapanel').metaPanel();
 
     refreshPanels();
